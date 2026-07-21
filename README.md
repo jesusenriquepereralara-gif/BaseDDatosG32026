@@ -204,6 +204,7 @@ README.md
 # 👤 Autor
 
 **Jesús Enrique Perera Lara**
+-Desarrollador de Software en formación, apasado por las bases de Datos y el Desarrollo de Software.
 
 📧 **Email:** <jesusenriquepereralara@gmail.com>
 ⭐
