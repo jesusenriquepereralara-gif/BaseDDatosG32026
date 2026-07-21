@@ -1,1128 +1,968 @@
-# Diccionario de Datos de BD contro, escolar 
+# Diccionarios de datos
 
-1. Informacion General
-
-| Elementos | Valor |
+## Ejercicio 1
+### 1. Información general
+| Elemento | Valor |
 | :--- | :--- |
-| Proyecto  | Sistema de control Escolar |
-| Version | 1.0|
-| Fecha | Juno 2026 |
-| Elabora | Juan Raul Rangel Contreras |
-| SGBD | SQLServer|
+| Proyecto | Sistema de Control Escolar |
+| Versión | 1.0 |
+| Fecha | Junio 2026 |
+| Elaboró | Dev. Santiago Nicolás De la mora Núñez |
+| SGBD | SQLServer |
 
-2. Describe del Sistema de BD
-
-El sistema administra 
-
-- Carrera
+### 2. Descripción del sistema de base de datos
+El sistema administra:
+- Carreras
 - Alumnos
 - Profesores
 - Materias
 - Grupos
-- Incripciones
+- Inscripciones
 
-Permite controlar la oferta educativa y la inscripcion de los estudiantes 
+Permite controlar la oferta educativa y la inscripción de los estudiantes 
 
-3. catalogo de Restricciones utilizadas
-
-| Codigo | significa |
+### 3. Catalogo de restricciones 
+| Sigla | Significado |
 | :--- | :--- |
-| PK  | primary key |
-| FK | Foreign key |
-| NN | Not Null |
-| UN | Unique |
-| AI | Auto Increment |
-| CK | Check |
-| FK | Foreign key |
-| DF | Default |
+| PK | primary key |
+| FK | foreign key |
+| NN | not null |
+| UQ | unique |
+| AI | auto increment |
+| CK | check |
+| DF | default |
 
-4. Diccionario de Datos
+### 4. Diccionario de datos 
+**Tabla:** Carrera<br>
+**Descripcion:** Almacena las carreras ofertadas por una universidad.
 
-**Tabla:** Carrera
-
-**Descripcion:** __Almacena las Carreras ofertadas por la Universidad__
-
-| Campo | Tipo | Longitud | Restriccion | Descripcion |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| ID_Carrera | INT | - | PK, AI, NN | Identificador unico de la carrera |
-| Nombre | Varchar | 100 | UQ, NN | Nombre de la carrera |
-| Duracion_Cuatrimestre | INT | - | NN, CH(>0) | Duracion de Cuatrimestre |
-| Nombre | Varchar | 100 | UQ, NN | Nombre de la carrera |
+| id_carrera | INT | - | PK, AI, NN | Identificador unico de la carrera |
+| nombre | VARCHAR | 100 | UQ, NN | Nombre de la carrera |
+| duracion_cuatrimestre | INT | - | NN, CK(>0) | Duración del cuatrimestre |
 
 ---
+<br>
 
-**Tabla:** Alumno
+**Tabla:** Alumno<br>
+**Descripción:** Almacena la inromación de los estudiantes.
 
-**Descripcion:** __Almacena las Informacion de los Estudiantes__
-
-| Campo | Tipo | Longitud | Restriccion | Descripcion |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| ID_Alumno | INT | - | PK, AI, NN | Identificador unico de la carrera |
-| Matricula | Varchar | 10 | UQ, NN | Matricula Instutucional |
-| Nombre | Varchar | 50 | NN | Nombre de la Estudiante |
-| Apellido_Paterno | Varchar | 50 | NN | Apellido Paterno|
-| Apellido_Materno | Varchar | 50 | Null | Apellido Materno|
-| Correo | Varchar | 100 | UQ, NN | Correo institucional |
-| Fecha_Naci | Date | - | NN | Fecha de nacimiento|
-| ID_Carrera | INT | - | FK, NN | Carrera a la que Pertenece|
+| id_alumno | INT | - | PK, AI, NN | Identificador unico del alumno |
+| matricula | VARCHAR | 10 | UQ, NN | Matricula institucional |
+| nombre |  VARCHAR | 50 | NN | Nombre del estudiante |
+| apellido_paterno | VARCHAR | 50 | NULL | Apellido paterno |
+| apellido_materno | VARCHAR | 50 | NULL | Apellido materno |
+| correo |  VARCHAR | 100 | UQ, NN | Correo institucional |
+| fecha_nacimiento | DATE | - | NN | Fecha de nacimiento |
+| id_carrera |  INT | - |  FK, NN | Carrera a la que pertenece |
 
----
-
-5. Relaciones del Sistema
-
-| Relacion | Cardinalidad | Descripción |
-|:----------|:---------:|----------:|
-| Carrea -> Alumno | 1:N | Una carrera tiene muchos alumnos    |
-| Carrera -> Materia | 1:N | Una Carreta tiene muchas materias    |
-| Profesor -> Grupo | 1:N | Un Profesro puede Impartir varios Grupos |
-| Alumno -> Incripcion | 1:N | Un alumno puede tener varias incripciones |
-| Materia -> Grupo| 1:N | Una materia puede tener varias inscripciones |
-| Grupo -> Incripcion | 1:N | Un grupo puede tener muchas alumnos |
-
-6. Matriz de Claves Foraneas
-
-| Tabla | Campo FK | Descripción |
-|:----------|:---------:|----------:|
-| Alumno | ID_Carrera| Carrea (ID_Carrera) |
-| Materia |  ID_Carrera | Carrea (ID_Carrera) |
-| Grupo | ID_Profesor | Profesro (ID_profesor) |
-| Grupo |  ID_Materia | Materia (ID_Mateia) |
-| Incripcion |  ID_Alumno | Carrea (ID_alumno) |
-| Incripcion |  ID_grupo | Carrea (ID_Grupo) |
-
-7. Integridad Referencial
-
-| Regla | Descripcion |
-| :--- | :--- |
-| IR-01  | No puede registrar un alumno con una carrera inexistente |
-| IR-02  | No puede crear un grupo para una materia inexistente |
-| IR-03  | No se puede crear u  grupo para un profesor inexistente |
-
-8. Regla del Negocio
-
-| Codigo | Regla |
-| :--- | :--- |
-| RN-01  | Un alumno pertenece solo a una sola carrera |
-| RN-02  | Una carrera puede tener alumnos |
-| RN-03  | Una carrera puede tener muchas materias |
-
-9. Diagrama Relacional
-
-![Eje 1]()
-
-# Diccionario de datos de la base de datos control escolar 
-
-1. Información General
-
-| Elemento | Valor |
-| :--- | :--- |
-| Proyecto  | Sistema de Control Escolar Universidad |
-| Descripción | Base de datos para el control escolar universitario |
-| Versión | 1.0 |
-| Fecha | Junio 2026 |
-| Responsable | Jesus Enrique Perera Lara |
-| SGBD | SQLServer |
-
-2. Descripción del sistema de base de datos
-
-Una universidad administra profesores y cursos
-
-> De cada profesor se almacena:
-
-- numero de profesor
-- nombre
-- especialidad 
-
-> De cada curso se almacena:
-
-- numero de curso 
-- Nombre del curso
-- Creditos
-
-3. Catálogo de Resntrincciones Utilizadas
-
-| Codigo | Significado |
-| :--- | :--- |
-| PK | Primary Key |
-| FK | Foreign Key |
-| NN | Not Null |
-| UQ | Unique |
-| AI | Auto Increment |
-| CK | Check |
-| DF | Default |
-| FK | Foreign Key |
-
-
-### Tabla: Profesor
-
-*Descripción:* Almacena la información de los profesores.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
-| :--- | :--- | :--- | :--- | :--- |
-| Numprofesro | INT | - | PK, AI, NN | Identificador único del profesor |
-| Nombre | VARCHAR | 50 | NN | Nombre del profesor |
-| Apellido1 | VARCHAR | 50 | NN | Primer apellido del profesor |
-| Apellido2 | VARCHAR | 50 | NULL | Segundo apellido del profesor |
-
----
-
-### Tabla: Curso
-
-*Descripción:* Almacena los cursos impartidos por los profesores.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
-| :--- | :--- | :--- | :--- | :--- |
-| Numcurso | INT | - | PK, AI, NN | Identificador único del curso |
-| NombreCurso | VARCHAR | 100 | NN | Nombre del curso |
-| Creditos | INT | 2 | NN | Créditos asignados al curso |
-| numProf | INT | - | FK, NN | Profesor que imparte el curso |
-
----
-
-### Tabla: Especialidad
-
-*Descripción:* Almacena las especialidades asociadas a cada profesor.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
-| :--- | :--- | :--- | :--- | :--- |
-| Numesp | INT | - | PK, AI, NN | Identificador único de la especialidad |
-| Nombre | VARCHAR | 100 | NN | Nombre de la especialidad |
-| NumProf | INT | - | FK, NN | Profesor asociado a la especialidad |
-
----
-
-## 5. Relaciones entre Tablas
-
+### 5. Relaciones
 | Relación | Cardinalidad | Descripción |
-| :--- | :---: | :--- |
-| Profesor → Curso | 1:N | Un profesor puede impartir muchos cursos |
-| Profesor → Especialidad | 1:N | Un profesor puede tener varias especialidades |
-
----
-
-## 6. Matriz de Claves Foráneas
-
-| Tabla | Campo FK | Referencia |
 | :--- | :--- | :--- |
-| Curso | numProf | Profesor (Numprofesro) |
-| Especialidad | NumProf | Profesor (Numprofesro) |
+| Carrera -> Alumno | 1:N | Una carrera tiene muchos alumnos |
+| Carrera -> Materia | 1:N | Una carrera tiene muchas materias |
+| Profesor -> Grupo | 1:N | Un profesor puede impartir a varios grupos |
+| Materia -> Grupo | 1:N | Una materia puede abrirse en varios grupos |
+| Alumno -> Inscripción | 1:N | Un alumno puede tener varias inscripciones |
+| Grupo -> Inscripción | 1:N | Un grupo puede tener muchos alumnos |
 
----
+### 6. Matriz de claves foraneas
+| Tabla | Campo FK | Descripción |
+| :--- | :--- | :--- |
+| Alumno | id_carrera | Carrera (id_carrera) |
+| Materia | id_carrera | Carrera (id_carrera) |
+| Grupo | id_profesor | Profesor (id_profesor) |
+| Grupo | id_materia | Materia (id_materia) |
+| Inscripción | id_alumno | Alumno (id_alumno) |
+| Inscripción | id_grupo | Grupo (id_grupo) |
 
-7. Integridad Referencial  
-
+### 7. Integridad referencial
 | Regla | Descripción |
 | :--- | :--- |
-| IR-01 | No se puede registrar un curso con un profesor inexistente |
-| IR-02 | No se puede registrar una especialidad para un profesor inexistente |
+| IR-01 | No se puede registrar un alumno con una carrera inexistente |
+| IR-02 | No se puede crear un grupo para una materia inexistente |
+| IR-03 | No se puede crear un grupo para un profesor inexistente |
 
-8. Reglas del Negocio 
+### 8. Reglas del negocio
+| Código | Regla |
+| :--- | :--- |
+| RN-01 | Un alumno pertenece a una sola carrera |
+| RN-02 | Una carrera puede tener muchos alumnos |
+| RN-03 | Una carrera puede tener muchas materias |
 
-| Codigo | Regla |
+### 9. Diagrama relacional
+![Diagrama relacional](../img/ejercicio3-relacional.png)
+
+
+## Ejercicio 2
+### 1. Información general
+| Elemento | Valor |
+| :--- | :--- |
+| Proyecto | Sistema de Hospital |
+| Versión | 1.0 |
+| Fecha | Junio 2026 |
+| Elaboró | Dev. Santiago Nicolás De la mora Núñez |
+| SGBD | SQLServer |
+
+### 2. Descripción del sistema de base de datos
+El sistema administra:
+- Pacientes
+- Expedientes
+
+### 3. Catalogo de restricciones 
+| Sigla | Significado |
+| :--- | :--- |
+| PK | primary key |
+| FK | foreign key |
+| NN | not null |
+| UQ | unique |
+| AI | auto increment |
+| CK | check |
+| DF | default |
+
+### 4. Diccionario de datos 
+**Tabla:** Paciente<br>
+**Descripcion:** Almacena la información personal de cada paciente.
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| num_paciente | INT | - | PK, AI, NN | Identificador único del paciente |
+| nombre | VARCHAR | 30 | UQ, NN | Nombre o nombres del paciente |
+| apellido_paterno | VARCHAR | 20 | UQ, NN | Apellido paterno del paciente |
+| apellido_materno | VARCHAR | 20 | UQ | Apellido materno del paciente |
+| fecha_nac | DATE | - | - | Fecha de nacimiento del paciente |
+
+---
+<br>
+
+**Tabla:** Expediente<br>
+**Descripción:** Almacena la información de cada expediente.
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| num_expediente | INT | - | PK, AI, NN | Identificador único del expediente |
+| fecha_apertura | DATE | - | NN | Fecha de apertura del expediente |
+| tipo_sangre | VARCHAR | 3 | NN | Tipo de sangre del paciente |
+| num_paciente | INT | - | FK, NN, UQ | Clave foránea del dentificador único del paciente |
+
+### 5. Relaciones
+| Relación | Cardinalidad | Descripción |
+|:----------|:---------:|----------:|
+| Paciente -> Expediente | 1:1 | Un paciente tiene un solo expediente |
+
+### 6. Matriz de claves foraneas
+| Tabla | Campo FK | Descripción |
+| :--- | :--- | :--- |
+| Expediente | id_paciente | Paciente (id_paciente) |
+
+### 7. Integridad referencial
+| Regla | Descripción |
+| :--- | :--- |
+| IR-01 | No se puede crear un expediente para un paciente inexistente |
+| IR-02 | No se puede crear un paciente para un paciente expediente inexistente |
+
+### 8. Reglas del negocio
+| Código | Regla |
+| :--- | :--- |
+| RN-01 | Cada paciente debe tener exactamente un expediente médico |
+| RN-02 | Cada expediente médico pertenenece a un único paciente |
+| RN-03 | No puede existir un expediente sin paciente |
+| RN-04 | No puede existir un paciente sin expediente |
+
+### 9. Diagrama relacional
+![Diagrama relacional](../img/ejercicio1-relacional.png)
+
+
+## Ejercicio 3
+### 1. Información general
+| Elemento | Valor |
+| :--- | :--- |
+| Proyecto | Sistema de Administración Universitaria de Profesores y Cursos |
+| Versión | 1.0 |
+| Fecha | Junio 2026 |
+| Elaboró | Dev. Santiago Nicolás De la mora Núñez |
+| SGBD | SQLServer |
+
+### 2. Descripción del sistema de base de datos
+El sistema administra:
+- Profesores
+- Cursos
+- Especialidades de los profesores
+
+### 3. Catalogo de restricciones 
+| Sigla | Significado |
+| :--- | :--- |
+| PK | primary key |
+| FK | foreign key |
+| NN | not null |
+| UQ | unique |
+| AI | auto increment |
+| CK | check |
+| DF | default |
+
+### 4. Diccionario de datos 
+**Tabla:** Profesor<br>
+**Descripcion:** Almacena los datos del profesor.
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| num_prof | INT | - | PK, AI, NN | Identificador único del profesor |
+| nombre | VARCHAR | 30 | UQ, NN | Nombre o nombres del profesor |
+| apellido_1 | VARCHAR | 20 | UQ, NN | Apellido paterno del profesor |
+| apellido_1 | VARCHAR | 20 | UQ | Apellido materno del profesor |
+
+---
+<br>
+
+**Tabla:** Curso<br>
+**Descripción:** Almacena la información de cada curso.
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| num_curso | INT | - | PK, AI, NN | Identificador único del curso |
+| nombre | VARCHAR | 30 | NN | Nombre del curso |
+| creditos | DECIMAL | - | NN | Creditos del curso |
+| num_prof | INT | - | FK, NN, UQ | Clave foranea del identificador único del profesor |
+
+---
+<br>
+
+**Tabla:** Especialidad<br>
+**Descripción:** Almacena los nombres de las múltiples especialidades que puede tener un profesor.
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| num_especialidad | INT | - | PK, AI, NN | Identificador único de la especialidad |
+| num_prof | INT | - | FK, NN | Clave foránea del identificador único del profesor |
+| nombre | VARCHAR | 40 | NN | Nombre de la especialidad |
+
+### 5. Relaciones
+| Relación | Cardinalidad | Descripción |
+|:----------|:---------:|----------:|
+| Profesor -> Curso | 1:N | Un profesor puede impartir a muchos cursos |
+| Profesor -> Especialidad | 1:N | Un profesor puede tener muchas especialidades |
+
+### 6. Matriz de claves foraneas
+| Tabla | Campo FK | Descripción |
+| :--- | :--- | :--- |
+| Curso | num_prof | Profesor (num_prof) |
+| Especialidad | num_prof | Profesor (num_prof) |
+
+### 7. Integridad referencial
+| Regla | Descripción |
+| :--- | :--- |
+| IR-01 | No puede existir un curso sin estar asignado a un profesor |
+| IR-02 | No puede existir una especialidad sin profesor |
+
+### 8. Reglas del negocio
+| Código | Regla |
 | :--- | :--- |
 | RN-01 | Un profesor puede impartir varios cursos |
-| RN-02 | Un curso solo puede ser impartido por un profesor |
+| RN-02 | Un curso solamente puede ser impartido 
+por un profesor |
 | RN-03 | Puede existir un profesor que actualmente no imparta cursos |
 | RN-04 | Todo curso debe estar asignado a un profesor |
 
-9. Diagrama Relacional
-
-### Solución ejercicio Relacional
-
-![Solución Ej2](/img/ER/tab%202.png)
+### 9. Diagrama relacional
+![Diagrama relacional](../img/ejercicio2-relacional.png)
 
 
-# Diccionario de datos de la base de datos control de inscripciones 
-
-1. Información General
-
+## Ejercicio 4
+### 1. Información general
 | Elemento | Valor |
 | :--- | :--- |
-| Proyecto  | Sistema de Control de Inscripciones |
-| Descripción | Base de datos para el control de inscripciones |
+| Proyecto | Sistema de Administración Escolar de Alumnos y Materias |
 | Versión | 1.0 |
 | Fecha | Junio 2026 |
-| Responsable | Jesus Enrique Perera Lara |
+| Elaboró | Dev. Santiago Nicolás De la mora Núñez |
 | SGBD | SQLServer |
 
-2. Descripción del sistema de base de datos
+### 2. Descripción del sistema de base de datos
+El sistema administra:
+- Alumnos
+- Materias
+- inscripciones
 
-Una escuela administra alumnos y materias
-
-> De cada alumno se almacena:
-
-- Matricula
-- Nombre
-- Semestre
-
-> De cada materia:
-
-- Clave de la materia
-- Nombre de la materia
-- Creditos
-
-3. Catálogo de Resntrincciones Utilizadas
-
-| Codigo | Significado |
+### 3. Catalogo de restricciones 
+| Sigla | Significado |
 | :--- | :--- |
-| PK | Primary Key |
-| FK | Foreign Key |
-| NN | Not Null |
-| UQ | Unique |
-| AI | Auto Increment |
-| CK | Check |
-| DF | Default |
-| FK | Foreign Key |
+| PK | primary key |
+| FK | foreign key |
+| NN | not null |
+| UQ | unique |
+| AI | auto increment |
+| CK | check |
+| DF | default |
 
-4. Diccionario de Datos
+### 4. Diccionario de datos 
+**Tabla:** Alumno<br>
+**Descripcion:** Almacena los datos del alumno.
 
-### Tabla: Alumno
-
-*Descripción:* Almacena la información de los estudiantes.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| IdAlumno | INT | - | PK, AI, NN | Identificador único del alumno |
-| Matricula | VARCHAR | 10 | NN, UQ | Matrícula institucional |
-| Nombre | VARCHAR | 100 | NN | Nombre del alumno |
-| Apellido1 | VARCHAR | 50 | NN | Primer apellido |
-| Apellido2 | VARCHAR | 50 | NULL | Segundo apellido |
-| Semestre | INT | 2 | NN | Semestre actual del alumno |
+| num_prof | INT | - | PK, AI, NN | Identificador único del alumno |
+| nombre | VARCHAR | 30 | UQ, NN | Nombre o nombres del alumno |
+| apellido_paterno | VARCHAR | 20 | UQ, NN | Apellido paterno del alumno |
+| apellido_materno | VARCHAR | 20 | UQ | Apellido materno del alumno |
+| semestre | INT | - | UQ, CK(>= 1 AND <= 6>) | Semestre actual del alumno |
 
 ---
+<br>
 
-### Tabla: Materia
+**Tabla:** Materia<br>
+**Descripción:** Almacena la información la materia.
 
-*Descripción:* Almacena la información de las materias.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| IdMateria | INT | - | PK, AI, NN | Identificador único de la materia |
-| NombreMat | VARCHAR | 100 | NN | Nombre de la materia |
-| Creditos | INT | 2 | NN | Créditos asignados a la materia |
+| clave_materia | INT | - | PK, AI, NN | Identificador único de la materia |
+| nombre | VARCHAR | 30 | NN | Nombre de la materia |
+| creditos | DECIMAL | - | NN | Creditos de la materia |
 
 ---
+<br>
 
-### Tabla: INSCRIBE
+**Tabla:** Inscribe<br>
+**Descripción:** Relaciona las tablas Alumno y Materia.
 
-*Descripción:* Almacena las inscripciones realizadas por los alumnos a las materias.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| IdMateria | INT | - | PK, FK, NN | Materia inscrita |
-| IdAlumno | INT | - | PK, FK, NN | Alumno inscrito |
-| FechaInscripcion | DATE | - | NN | Fecha de inscripción |
-| Califin | DECIMAL | 5,2 | NULL | Calificación final obtenida |
+| matricula | INT | - | PK, FK, NN | Identificador único del alumno |
+| clave_materia | INT | - | PK, FK, NN | Clave foránea del identificador único de la materia |
+| fecha_inscripcion | DATE | - | NN | Fecha en que un alumno se inscribió a una materia |
+| calificacion_final | DECIMAL | - | NN | Calificación final de un alumno en una materia |
 
----
-
-## 5. Relaciones entre Tablas
-
+### 5. Relaciones
 | Relación | Cardinalidad | Descripción |
-| :--- | :---: | :--- |
-| Alumno → INSCRIBE | 1:N | Un alumno puede realizar muchas inscripciones |
-| Materia → INSCRIBE | 1:N | Una materia puede tener muchos alumnos inscritos |
+|:----------|:---------:|----------:|
+| Alumno -> Inscribe | 1:N | Un alumno se puede inscribir a muchas materias |
+| Materia -> Inscribe | 1:N | Una materia puede tener muchos alumnos inscritos |
 
----
-
-## 6. Matriz de Claves Foráneas
-
-| Tabla | Campo FK | Referencia |
+### 6. Matriz de claves foraneas
+| Tabla | Campo FK | Descripción |
 | :--- | :--- | :--- |
-| INSCRIBE | IdAlumno | Alumno (IdAlumno) |
-| INSCRIBE | IdMateria | Materia (IdMateria) |
+| Inscribe | matricula | Alumno (matricula) |
+| Inscribe | clave_materia | Materia (clave_materia) |
 
----
-
-## 7. Integridad Referencial
-
+### 7. Integridad referencial
 | Regla | Descripción |
 | :--- | :--- |
-| IR-01 | No se puede registrar una inscripción para un alumno inexistente |
-| IR-02 | No se puede registrar una inscripción para una materia inexistente |
-| IR-03 | No se puede duplicar la inscripción del mismo alumno a la misma materia |
+| IR-01 | No puede existir un alumno que no esté inscrito a ninguna materia |
 
----
-
-8. Reglas del Negocio 
-
-| Codigo | Regla |
+### 8. Reglas del negocio
+| Código | Regla |
 | :--- | :--- |
 | RN-01 | Un alumno puede inscribirse en varias materias |
 | RN-02 | Una materia puede tener muchos alumnos inscritos |
 | RN-03 | Puede existir una materia sin alumnos inscritos |
 | RN-04 | Todo alumno debe estar inscrito en al menos una materia |
-| RN-05 | De cada inscripción se desea almacenar: Fecha de inscripción y Calificación final |
+| RN-05 | De cada inscripción se desea almacenar la fecha de inscripción y la calificación final |
 
----
-
-9. Diagrama Relacional
-
-### Solución ejercicio Relacional
-
-![Solución Ej3](/img/ER/Ejercicio3-R%20-%20Página%201.png)
+### 9. Diagrama relacional
+![Diagrama relacional](../img/ejercicio3-relacional.png)
 
 
-# Diccionario de datos de la base de datos control empresarial 
-
-1. Información General
-
+## Ejercicio 5
+### 1. Información general
 | Elemento | Valor |
 | :--- | :--- |
-| Proyecto  | Sistema de Control Empresarial |
-| Descripción | Base de datos para el control empresarial |
+| Proyecto | Sistema Empresarial de Administración de Inventario |
 | Versión | 1.0 |
 | Fecha | Junio 2026 |
-| Responsable | Jesus Enrique Perera Lara |
+| Elaboró | Dev. Santiago Nicolás De la mora Núñez |
 | SGBD | SQLServer |
 
-2. Descripción del sistema de base de datos
+### 2. Descripción del sistema de base de datos
+El sistema administra:
+- Clientes
+- Pedidos
+- Productos
 
-Una empresa se dedica a la venta de productos al por mayor, y necesita registrar lo siguiente:
-
-> De los clientes necesita almacenar:
-
-- Identificador del cliente
-- nombre del cliente, el cual es una persona moral
-
-> De los pedidos de la venta:
-
-- Numero del producto
-- Nombre del producto
-- Precio del producto
-
-3. Catálogo de Resntrincciones Utilizadas
-
-| Codigo | Significado |
+### 3. Catalogo de restricciones 
+| Sigla | Significado |
 | :--- | :--- |
-| PK | Primary Key |
-| FK | Foreign Key |
-| NN | Not Null |
-| UQ | Unique |
-| AI | Auto Increment |
-| CK | Check |
-| DF | Default |
-| FK | Foreign Key |
+| PK | primary key |
+| FK | foreign key |
+| NN | not null |
+| UQ | unique |
+| AI | auto increment |
+| CK | check |
+| DF | default |
 
-## 4. Diccionario de Datos
+### 4. Diccionario de datos 
+**Tabla:** Cliente<br>
+**Descripcion:** Almacena la información del cliente.
 
-### Tabla: Cliente
-
-*Descripción:* Almacena la información de los clientes.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| IdCliente | INT | - | PK, AI, NN | Identificador único del cliente |
-| Nombre | VARCHAR | 100 | NN | Nombre del cliente |
-| Apellido1 | VARCHAR | 50 | NN | Primer apellido |
-| Apellido2 | VARCHAR | 50 | NULL | Segundo apellido |
+| id_cliente | INT | - | PK, AI, NN | Identificador único del cliente |
+| nombre | VARCHAR | 30 | UQ, NN | Nombre o nombres del cliente |
+| apellido_paterno | VARCHAR | 20 | UQ, NN | Apellido paterno del cliente |
+| apellido_materno | VARCHAR | 20 | UQ | Apellido materno del cliente |
 
 ---
+<br>
 
-### Tabla: Pedido
+**Tabla:** Pedido<br>
+**Descripción:** Almacena la información del pedido.
 
-*Descripción:* Almacena los pedidos realizados por los clientes.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| IdPedido | INT | - | PK, AI, NN | Identificador único del pedido |
-| Fecha | DATE | - | NN | Fecha de registro del pedido |
-| IdCliente | INT | - | FK, NN | Cliente que realizó el pedido |
+| numero | INT | - | PK, AI, NN | Identificador único del pedido |
+| fecha | DATE | - | NN | Fecha de entrega del pedido |
+| id_cliente | INT | - | FK, NN | Clave foranea del identificador único del cliente |
 
 ---
+<br>
 
-### Tabla: Producto
+**Tabla:** Producto<br>
+**Descripción:** Almacena los datos del producto.
 
-*Descripción:* Almacena el catálogo de productos disponibles.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| IdProducto | INT | - | PK, AI, NN | Identificador único del producto |
-| NombreProducto | VARCHAR | 100 | NN | Nombre del producto |
-| Precio | DECIMAL | 10,2 | NN | Precio base del producto |
+| numero | INT | - | PK, FK, NN | Identificador único del producto |
+| nombre | VARCHAR | 30 | NN, UQ | Nombre del producto |
+| precio | DECIMAL | - | NN | Precio del producto |
 
 ---
+<br>
 
-### Tabla: Contiene
+**Tabla:** Contiene<br>
+**Descripción:** Relaciona las tablas Pedido y Producto.
 
-*Descripción:* Almacena el detalle de productos incluidos en cada pedido.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| IdPedido | INT | - | PK, FK, NN | Pedido asociado |
-| IdProducto | INT | - | PK, FK, NN | Producto incluido |
-| ContenidoVenta | INT | 10 | NN | Cantidad vendida del producto |
-| PrecioVenta | DECIMAL | 10,2 | NN | Precio aplicado al momento de la venta |
+| numero_pedido | INT | - | PK, FK, NN | Clave foranea del identificador único del pedido |
+| numero_producto | INT | - | PK, FK, NN | Clave foranea del identificador único del producto |
+| cantidad_vendida | INT | - | NN | Cantidad vendida de productos |
+| precio_venta | DECIMAL | - | NN | Suma de los precios de cada producto dentro de un pedido |
 
-
----
-
-## 5. Relaciones entre Tablas
-
+### 5. Relaciones
 | Relación | Cardinalidad | Descripción |
-| :--- | :---: | :--- |
-| Cliente → Pedido | 1:N | Un cliente puede realizar muchos pedidos |
-| Pedido → Contiene | 1:N | Un pedido puede contener varios productos |
-| Producto → Contiene | 1:N | Un producto puede aparecer en muchos pedidos |
+|:----------|:---------:|----------:|
+| Cliente -> Pedido | 1:N | Un cliente puede tener muchos pedidos |
+| Pedido -> Contiene | 1:N | Un pedido puede contener muchos productos |
+| Producto -> Contiene | 1:N | Un producto puede ser contenido por muchos pedidos |
 
----
-
-## 6. Matriz de Claves Foráneas
-
-| Tabla | Campo FK | Referencia |
+### 6. Matriz de claves foraneas
+| Tabla | Campo FK | Descripción |
 | :--- | :--- | :--- |
-| Pedido | IdCliente | Cliente (IdCliente) |
-| Contiene | IdPedido | Pedido (IdPedido) |
-| Contiene | IdProducto | Producto (IdProducto) |
+| Pedido | id_cliente | Cliente (id_cliente) |
+| Contiene | numero_pedido | Pedido (numero) |
+| Contiene | numero_producto | Producto (numero) |
 
----
-
-## 7. Integridad Referencial
-
+### 7. Integridad referencial
 | Regla | Descripción |
 | :--- | :--- |
-| IR-01 | No se puede registrar un pedido para un cliente inexistente |
-| IR-02 | No se puede agregar un producto inexistente a un pedido |
-| IR-03 | No se puede eliminar un pedido si tiene productos asociados |
+| IR-01 | Un pedido no puede existir sin un producto |
+| IR-02 | Un pedido no puede existir sin un cliente |
+| IR-03 | El detalle del pedido no puede existir sin un pedido |
+| IR-04 | El detalle del pedido no puede existir sin un producto |
 
----
-
-8. Reglas del Negocio 
-
-| Codigo | Regla |
+### 8. Reglas del negocio
+| Código | Regla |
 | :--- | :--- |
 | RN-01 | Un cliente puede realizar muchos pedidos |
-| RN-02 | Cada pedido pertenece a un solo cliente |
+| RN-02 | Cada pedido pertenece a un cliente |
 | RN-03 | Un pedido contiene varios productos |
 | RN-04 | Un producto puede aparecer en muchos pedidos |
-| RN-05 | Un pedido debe contener almenos un productos |
+| RN-05 | Un pedido debe contener al menos un producto |
 | RN-06 | Un producto puede no haber sido vendido |
 | RN-07 | El detalle del pedido no existe sin pedido |
 | RN-08 | El detalle del pedido no existe sin producto |
-| RN-09 | El detalle del pedido almacena cantidad vendida y precio de venta |
+| RN-09 | El detalle del pedido alamacena cantidad vendida y precio de venta |
 
-9. Diagrama Relacional
-
-### Solución ejercicio Relacional
-
-![Solución Ej4](/img/ER/Tab4.png)
+### 9. Diagrama relacional
+![Diagrama relacional](../img/ejercicio4-relacional.png)
 
 
-# Diccionario de Datos de la Base de Datos Empresa
-
-## 1. Información General
-
+## Ejercicio 6
+### 1. Información general
 | Elemento | Valor |
 | :--- | :--- |
-| Proyecto | Sistema de Administración Empresarial |
-| Descripción | Base de datos para la administración de empleados, departamentos, proyectos y dependientes |
+| Proyecto | Enterprise Management System |
 | Versión | 1.0 |
 | Fecha | Junio 2026 |
-| Responsable |Jesus Enrique Perera Lara |
-| SGBD | SQL Server |
+| Elaboró | Dev. Santiago Nicolás De la mora Núñez |
+| SGBD | SQLServer |
 
----
-
-## 2. Descripción del Sistema de Base de Datos
-
+### 2. Descripción del sistema de base de datos
 El sistema administra:
-
 - Empleados
 - Departamentos
-- Ubicaciones
-- Proyectos
+- Ubicaciones de los departamentos
 - Dependientes
-- Asignación de trabajo
+- Proyectos
 
-Permite controlar la estructura organizacional de la empresa y la participación de empleados en proyectos.
-
----
-
-## 3. Catálogo de Restricciones Utilizadas
-
-| Código | Significado |
+### 3. Catalogo de restricciones 
+| Sigla | Significado |
 | :--- | :--- |
-| PK | Primary Key |
-| FK | Foreign Key |
-| NN | Not Null |
-| UQ | Unique |
-| AI | Auto Increment |
-| CK | Check |
-| DF | Default |
+| PK | primary key |
+| FK | foreign key |
+| NN | not null |
+| UQ | unique |
+| AI | auto increment |
+| CK | check |
+| DF | default |
 
----
+### 4. Diccionario de datos 
+**Tabla:** Employee<br>
+**Descripcion:** Almacena la información del empleado.
 
-## 4. Diccionario de Datos
-
-### Tabla: Employee
-
-*Descripción:* Almacena la información de los empleados.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| SSn | VARCHAR | 15 | PK, NN | Número identificador del empleado |
-| FirstName | VARCHAR | 50 | NN | Nombre |
-| LastName | VARCHAR | 50 | NN | Apellidos |
-| Address | VARCHAR | 150 | NN | Dirección |
-| Bdate | DATE | - | NN | Fecha de nacimiento |
-| Salary | DECIMAL | 10,2 | NN | Salario |
-| Sex | CHAR | 1 | NN | Sexo |
-| Jef | VARCHAR | 15 | FK | Jefe directo |
+| ssn | INT | - | PK, AI, NN | Identificador único del empleado |
+| firstname | VARCHAR | 30 | NN | Nombre o nombres del empleado |
+| lastname | VARCHAR | 20 | NN | Apellidos del empleado |
+| address | VARCHAR | 40 | NN | Domicilio del empleado |
+| bdate | DATE | - | NN | Fecha de nacimiento del empleado |
+| salary | DECIMAL | - | NN | Salario del empleado |
+| sex | CHAR | 1 | NN | Sexo del empleado |
+| jef | INT | - | NN, FK | Clave foranea del identificador único del empleado con rol de jefe |
 
 ---
+<br>
 
-### Tabla: Department
+**Tabla:** Department<br>
+**Descripción:** Almacena la información del departamento.
 
-*Descripción:* Almacena los departamentos de la empresa.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| Number | INT | - | PK, AI, NN | Identificador del departamento |
-| Name | VARCHAR | 100 | NN, UQ | Nombre del departamento |
-| manager | VARCHAR | 15 | FK, UQ, NN | Empleado responsable |
-| Startdate | DATE | - | NN | Fecha de inicio del gerente |
+| number | INT | - | PK, NN | Número del departamento |
+| name | DATE | - | PK, NN | Nombre del departamento |
+| manager | INT | - | FK, UQ, NN | Clave foranea del identificador único del administrador |
+| startdate | DATE | - | NN | Fecha de inicio de funcionamiento del departamento |
+| ssn | INT | - | FK, NN | Clave foranea del identificador único del empleado |
 
 ---
+<br>
 
-### Tabla: Locations
+**Tabla:** Dependent<br>
+**Descripción:** Almacena los datos del dependiente del empleado.
 
-*Descripción:* Almacena las ubicaciones de cada departamento.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| NumLocation | INT | - | PK, NN | Identificador de ubicación |
-| NumberDep | INT | - | PK, FK, NN | Departamento asociado |
-| Location | VARCHAR | 100 | NN | Nombre o dirección de ubicación |
-
+| name | VARCHAR | 30 | PK, NN | Identificador único del dependiente del empleado |
+| ssn | INT | - | FK, UQ, NN | Clave foranea del identificador único del empleado |
+| sex | CHAR | 1 | NN | Sexo del dependiente del empleado |
+| relationship | VARCHAR | 10 | NN | Tipo de relación del dependiente del empleado con el empleado |
 
 ---
+<br>
 
-### Tabla: Projects
+**Tabla:** Project<br>
+**Descripción:** Almacena la información de los proyectos.
 
-*Descripción:* Almacena los proyectos desarrollados por los departamentos.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| Number | INT | - | PK, AI, NN | Identificador del proyecto |
-| Name | VARCHAR | 100 | NN | Nombre del proyecto |
-| Location | VARCHAR | 100 | NN | Ubicación del proyecto |
-| NumberDsp | INT | - | FK, NN | Departamento responsable |
-| NameDef | VARCHAR | 100 | FK, NN | Departamento asignado |
+| name | VARCHAR | 20 | PK, UQ, NN | Nombre identificador del proyecto |
+| number | INT | - | PK, UQ, NN | Número identificador del proyecto |
+| location | VARCHAR | 30 | NN | Ubicación del proyecto |
+| number_dep | INT | - | FK, NN | Clave foranea del número del departamento |
+| name_dep | VARCHAR | 20 | FK, NN | Clave foranea del nombre del departamento |
 
 ---
+<br>
 
-### Tabla: WORKS_ON
+**Tabla:** Location<br>
+**Descripción:** Almacena las ubicacioones de los departamentos.
 
-*Descripción:* Relaciona empleados con proyectos.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| SSn | VARCHAR | 15 | PK, FK, NN | Empleado asignado |
-| NumberProj | INT | PK, FK, NN | Proyecto asignado |
-| Hours | DECIMAL | 5,2 | NN | Horas trabajadas |
-
+| number_location | INT | - | PK, AI, NN | Número identificador de la ubicación |
+| number_dep | INT | - | PK, UQ, NN | Número identificador del proyecto |
+| name_dep | VARCHAR | 20 | FK, NN | Clave foranea del nombre del departamento |
+| location | VARCHAR | 40 | FK, NN | Ubicación del departamento |
 
 ---
+<br>
 
-### Tabla: Dependent
+**Tabla:** Works_On<br>
+**Descripción:** Relaciona las tablas Employee y Project.
 
-*Descripción:* Almacena dependientes asociados a empleados.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| Name | VARCHAR | 100 | PK, NN | Nombre del dependiente |
-| SSn | VARCHAR | 15 | PK, FK, NN | Empleado asociado |
-| Sex | CHAR | 1 | NN | Sexo |
-| Relationship | VARCHAR | 50 | NN | Relación con el empleado |
-| Bdate | DATE | - | NN | Fecha de nacimiento |
+| ssn | INT | - | PK, FK, NN | Clave foranea del identificador único del empleado |
+| name_proj | VARCHAR | 30 | PK, FK, NN | Clave foranea del nombre del proyecto |
+| number_proj | INT | - | PK, FK, NN | Clave foranea del número del proyecto |
+| hours | INT | - | NN | Número de horas que el empleado dedicó en el proyecto |
 
-
----
-
-## 5. Relaciones entre Tablas
-
+### 5. Relaciones
 | Relación | Cardinalidad | Descripción |
-| :--- | :---: | :--- |
-| Employee → Department | 1:1 | Un empleado administra un departamento |
-| Department → Employee | 1:N | Un departamento tiene varios empleados |
-| Department → Locations | 1:N | Un departamento puede tener varias ubicaciones |
-| Department → Projects | 1:N | Un departamento administra proyectos |
-| Employee → WORKS_ON | 1:N | Un empleado participa en varios proyectos |
-| Projects → WORKS_ON | 1:N | Un proyecto tiene varios empleados |
-| Employee → Dependent | 1:N | Un empleado puede tener varios dependientes |
+|:----------|:---------:|----------:|
+| Employee -> Department | N:1 | Un empleado tiene un solo departamento pero un departamento tiene muchos empleados |
+| Employee -> Department | 1:N | Un empleado con el rol administrador tiene muchos departamentos |
+| Empleado -> Works_On | 1:N | Un empleado trabaja para muchos proyectos |
+| Project -> Works_On | 1:N | Un proyecto es trabajado por muchos empleados |
+| Employee -> Dependent | 1:N | Un empleado puede tener muchos dependientes |
+| Department -> Location | 1:N | Un departamento tiene muchas locaciones (ubicaciones) |
 
----
-
-## 6. Matriz de Claves Foráneas
-
-| Tabla | Campo FK | Referencia |
+### 6. Matriz de claves foraneas
+| Tabla | Campo FK | Descripción |
 | :--- | :--- | :--- |
-| Employee | Jef | Employee (SSn) |
-| Department | manager | Employee (SSn) |
-| Locations | NumberDep | Department (Number) |
-| Projects | NumberDsp | Department (Number) |
-| WORKS_ON | SSn | Employee (SSn) |
-| WORKS_ON | NumberProj | Projects (Number) |
-| Dependent | SSn | Employee (SSn) |
+| Department | ssn | Employee (ssn) |
+| Employee | jef | Employee (ssn) |
+| Dependent | ssn | Employee (ssn) |
+| Works_On | ssn | Employee (ssn) |
+| Works_On | name_proj, number_proj | Project (name, number) |
+| Location | number_dep, name_dep | Department (number, name) |
 
----
-
-## 7. Integridad Referencial
-
+### 7. Integridad referencial
 | Regla | Descripción |
 | :--- | :--- |
-| IR-01 | No se puede asignar un gerente inexistente |
-| IR-02 | No se puede asignar un proyecto a un departamento inexistente |
-| IR-03 | No se puede registrar horas para empleados inexistentes |
-| IR-04 | No se puede registrar dependientes para empleados inexistentes |
+| - | Información insuficiente |
 
----
-
-## 8. Reglas del Negocio
-
+### 8. Reglas del negocio
 | Código | Regla |
 | :--- | :--- |
-| RN-01 | Un empleado puede participar en varios proyectos |
-| RN-02 | Un departamento tiene un único gerente |
-| RN-03 | Un empleado puede tener varios dependientes |
-| RN-04 | Un proyecto pertenece a un único departamento |
+| - | Información insuficiente |
 
----
-
-9. Diagrama Relacional
-
-### Solución ejercicio Relacional
-
-![Solución Ej5](/img/ER/Tab5.png)
+### 9. Diagrama relacional
+![Diagrama relacional](../img/ejercicio5-relacional.png)
 
 
-# Diccionario de Datos de la Base de Datos Empresa
-
-## 1. Información General
-
+## Ejercicio 7
+### 1. Información general
 | Elemento | Valor |
 | :--- | :--- |
-| Proyecto | Sistema de Administración Empresarial |
-| Descripción | Base de datos para administrar empleados, departamentos, ubicaciones y proyectos |
+| Proyecto | Enterprise Management System |
 | Versión | 1.0 |
 | Fecha | Junio 2026 |
-| Responsable | Jesus Enrique Perera Lara |
-| SGBD | SQL Server |
+| Elaboró | Dev. Santiago Nicolás De la mora Núñez |
+| SGBD | SQLServer |
 
----
-
-## 2. Descripción del Sistema de Base de Datos
-
+### 2. Descripción del sistema de base de datos
 El sistema administra:
-
 - Empleados
 - Departamentos
-- Ubicaciones
-- Proyectos
+- Ubicaciones de los departamentos
 - Dependientes
-- Asignación de empleados a proyectos
+- Proyectos
 
-Permite controlar la estructura organizacional y la participación de empleados en distintos proyectos.
-
----
-
-## 3. Catálogo de Restricciones Utilizadas
-
-| Código | Significado |
+### 3. Catalogo de restricciones 
+| Sigla | Significado |
 | :--- | :--- |
-| PK | Primary Key |
-| FK | Foreign Key |
-| NN | Not Null |
-| UQ | Unique |
-| AI | Auto Increment |
-| CK | Check |
-| DF | Default |
+| PK | primary key |
+| FK | foreign key |
+| NN | not null |
+| UQ | unique |
+| AI | auto increment |
+| CK | check |
+| DF | default |
 
----
+### 4. Diccionario de datos 
+**Tabla:** Employee<br>
+**Descripcion:** Almacena la información del empleado.
 
-## 4. Diccionario de Datos
-
-### Tabla: Employee
-
-*Descripción:* Almacena la información de los empleados.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| SSn | VARCHAR | 15 | PK, NN | Identificador del empleado |
-| FirstName | VARCHAR | 50 | NN | Nombre |
-| LastName | VARCHAR | 50 | NN | Apellidos |
-| Address | VARCHAR | 150 | NN | Dirección |
-| Bdate | DATE | - | NN | Fecha de nacimiento |
-| Salary | DECIMAL | 10,2 | NN | Salario |
-| Sex | CHAR | 1 | NN | Sexo |
-| IdDependent | INT | FK | Referencia al dependiente |
+| ssn | INT | - | PK, AI, NN | Identificador único del empleado |
+| firstname | VARCHAR | 30 | NN | Nombre o nombres del empleado |
+| lastname | VARCHAR | 20 | NN | Apellidos del empleado |
+| address | VARCHAR | 40 | NN | Domicilio del empleado |
+| bdate | DATE | - | NN | Fecha de nacimiento del empleado |
+| salary | DECIMAL | - | NN | Salario del empleado |
+| sex | CHAR | 1 | NN | Sexo del empleado |
+| jef | INT | - | NN, FK | Clave foranea del identificador único del empleado con rol de jefe |
+| id_department | INT | - | FK, NN | Clave única del identificador único del departamento |
 
 ---
+<br>
 
-### Tabla: Department
+**Tabla:** Department<br>
+**Descripción:** Almacena la información del departamento.
 
-*Descripción:* Almacena la información de los departamentos.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| Number | INT | - | PK, AI, NN | Identificador del departamento |
-| manager | VARCHAR | 15 | FK, UQ, NN | Empleado responsable |
-| Startdate | DATE | - | NN | Fecha de inicio |
-| Name | VARCHAR | 100 | NN, UQ | Nombre del departamento |
+| id_department | INT | - | PK, AI, NN | Identificador único del departamento |
+| number | INT | - | UQ, NN | Número del departamento |
+| name | DATE | - | UQ, NN | Nombre del departamento |
+| manager | INT | - | FK, UQ, NN | Clave foranea del identificador único del administrador |
+| startdate | DATE | - | NN | Fecha de inicio de funcionamiento del departamento |
+| ssn | INT | - | FK, NN | Clave foranea del identificador único del empleado |
 
 ---
+<br>
 
-### Tabla: Locations
+**Tabla:** Dependent<br>
+**Descripción:** Almacena los datos del dependiente del empleado.
 
-*Descripción:* Almacena las ubicaciones de cada departamento.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| NumLocation | INT | - | PK, NN | Identificador de ubicación |
-| NumberDep | INT | - | PK, FK, NN | Departamento asociado |
-| Location | VARCHAR | 100 | NN | Nombre o dirección |
-
+| name | VARCHAR | 30 | PK, NN | Identificador único del dependiente del empleado |
+| ssn | INT | - | FK, UQ, NN | Clave foranea del identificador único del empleado |
+| sex | CHAR | 1 | NN | Sexo del dependiente del empleado |
+| relationship | VARCHAR | 10 | NN | Tipo de relación del dependiente del empleado con el empleado |
 
 ---
+<br>
 
-### Tabla: Projects
+**Tabla:** Project<br>
+**Descripción:** Almacena la información de los proyectos.
 
-*Descripción:* Almacena los proyectos administrados por los departamentos.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| Number | INT | - | PK, AI, NN | Identificador del proyecto |
-| Location | VARCHAR | 100 | NN | Ubicación del proyecto |
-| Name | VARCHAR | 100 | NN | Nombre del proyecto |
-| NameDep | VARCHAR | 100 | FK, NN | Departamento responsable |
+| id_project | INT | - | PK, AI, NN | Nombre identificador del proyecto |
+| name | VARCHAR | 20 | UQ, NN | Nombre identificador del proyecto |
+| number | INT | - | UQ, NN | Número identificador del proyecto |
+| id_department | INT | - | FK, NN | Clave foranea del identificador único del departamento |
 
 ---
+<br>
 
-### Tabla: WORKS_ON
+**Tabla:** Location<br>
+**Descripción:** Almacena las ubicacioones de los departamentos.
 
-*Descripción:* Relaciona empleados con proyectos.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| SSn | VARCHAR | 15 | PK, FK, NN | Empleado asignado |
-| NumberProj | INT | PK, FK, NN | Proyecto asignado |
-| Hours | DECIMAL | 5,2 | NN | Horas trabajadas |
-
+| number_location | INT | - | PK, AI, NN | Número identificador de la ubicación |
+| id_department | INT | - | FK, NN | Clave foranea del identificador único del departamento |
+| location | VARCHAR | 40 | FK, NN | Ubicación del departamento |
 
 ---
+<br>
 
-### Tabla: Dependent
+**Tabla:** Works_On<br>
+**Descripción:** Relaciona las tablas Employee y Project.
 
-*Descripción:* Almacena los dependientes de cada empleado.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| IdDependent | INT | - | PK, AI, NN | Identificador del dependiente |
-| SSn | VARCHAR | 15 | FK, NN | Empleado asociado |
-| Name | VARCHAR | 100 | NN | Nombre del dependiente |
-| Sex | CHAR | 1 | NN | Sexo |
-| Relationship | VARCHAR | 50 | NN | Relación con el empleado |
-| Bdate | DATE | - | NN | Fecha de nacimiento |
+| ssn | INT | - | PK, FK, NN | Clave foranea del identificador único del empleado |
+| id_project | INT | - | PK, FK, NN | Clave foranea del identificador único del proyecto |
+| hours | INT | - | NN | Número de horas que el empleado dedicó en el proyecto |
 
----
-
-## 5. Relaciones entre Tablas
-
+### 5. Relaciones
 | Relación | Cardinalidad | Descripción |
-| :--- | :---: | :--- |
-| Department → Employee | 1:N | Un departamento tiene varios empleados |
-| Department → Locations | 1:N | Un departamento puede tener varias ubicaciones |
-| Department → Projects | 1:N | Un departamento administra varios proyectos |
-| Employee → Dependent | 1:N | Un empleado puede tener varios dependientes |
-| Employee → WORKS_ON | 1:N | Un empleado participa en varios proyectos |
-| Projects → WORKS_ON | 1:N | Un proyecto puede tener varios empleados |
+|:----------|:---------:|----------:|
+| Employee -> Department | N:1 | Un empleado tiene un solo departamento pero un departamento tiene muchos empleados |
+| Employee -> Department | 1:N | Un empleado con el rol administrador tiene muchos departamentos |
+| Empleado -> Works_On | 1:N | Un empleado trabaja para muchos proyectos |
+| Project -> Works_On | 1:N | Un proyecto es trabajado por muchos empleados |
+| Employee -> Dependent | 1:N | Un empleado puede tener muchos dependientes |
+| Department -> Location | 1:N | Un departamento tiene muchas locaciones (ubicaciones) |
 
----
-
-## 6. Matriz de Claves Foráneas
-
-| Tabla | Campo FK | Referencia |
+### 6. Matriz de claves foraneas
+| Tabla | Campo FK | Descripción |
 | :--- | :--- | :--- |
-| Employee | IdDependent | Dependent (IdDependent) |
-| Department | manager | Employee (SSn) |
-| Locations | NumberDep | Department (Number) |
-| Projects | NameDep | Department (Name) |
-| WORKS_ON | SSn | Employee (SSn) |
-| WORKS_ON | NumberProj | Projects (Number) |
-| Dependent | SSn | Employee (SSn) |
+| Department | ssn | Employee (ssn) |
+| Employee | id_department | Department (id_department) |
+| Employee | jef | Employee (ssn) |
+| Dependent | ssn | Employee (ssn) |
+| Works_On | ssn | Employee (ssn) |
+| Works_On | id_project | Project (id_project) |
+| Location | id_department | Department (id_department) |
 
----
-
-## 7. Integridad Referencial
-
+### 7. Integridad referencial
 | Regla | Descripción |
 | :--- | :--- |
-| IR-01 | No se puede asignar un gerente inexistente |
-| IR-02 | No se puede registrar un dependiente para un empleado inexistente |
-| IR-03 | No se puede asignar horas a proyectos inexistentes |
-| IR-04 | No se puede registrar una ubicación para departamentos inexistentes |
+| - | Información insuficiente |
 
----
-
-## 8. Reglas del Negocio
-
+### 8. Reglas del negocio
 | Código | Regla |
 | :--- | :--- |
-| RN-01 | Un departamento tiene un único gerente |
-| RN-02 | Un empleado puede participar en varios proyectos |
-| RN-03 | Un empleado puede registrar varios dependientes |
-| RN-04 | Un proyecto pertenece únicamente a un departamento |
+| - | Información insuficiente |
 
----
+### 9. Diagrama relacional
+![Diagrama relacional](../img/ejercicio6-relacional.png)
 
-9. Diagrama Relacional
 
-### Solución ejercicio Relacional
-
-![Solución Ej6](/img/ER/tab6.png)
-
-## 1. Información General universidad
-
+## Ejercicio 8
+### 1. Información general
 | Elemento | Valor |
 | :--- | :--- |
-| Proyecto | Sistema de Administración Universitaria |
-| Descripción | Base de datos para administrar alumnos, profesores, materias, departamentos, proyectos y credenciales |
+| Proyecto | Macro Sistema de Administración de Universidades |
 | Versión | 1.0 |
 | Fecha | Junio 2026 |
-| Responsable | Jesus Enrique Perera Lara |
-| SGBD | SQL Server |
+| Elaboró | Dev. Santiago Nicolás De la mora Núñez |
+| SGBD | SQLServer |
 
----
-
-## 2. Descripción del Sistema de Base de Datos
-
+### 2. Descripción del sistema de base de datos
 El sistema administra:
-
 - Alumnos
-- Profesores
-- Materias
-- Departamentos
 - Credenciales
-- Teléfonos de alumnos
-- Dependientes de profesores
-- Proyectos de investigación
-- Inscripción de alumnos a materias
-- Participación de profesores en proyectos
+- Materias
+- Profesores
+- Dependientes de los profesores
+- Departamentos
+- Proyectos
 
-Permite controlar la información académica y administrativa de una institución educativa.
-
----
-
-## 3. Catálogo de Restricciones Utilizadas
-
-| Código | Significado |
+### 3. Catalogo de restricciones 
+| Sigla | Significado |
 | :--- | :--- |
-| PK | Primary Key |
-| FK | Foreign Key |
-| NN | Not Null |
-| UQ | Unique |
-| CK | Check |
-| DF | Default |
+| PK | primary key |
+| FK | foreign key |
+| NN | not null |
+| UQ | unique |
+| AI | auto increment |
+| CK | check |
+| DF | default |
 
----
+### 4. Diccionario de datos 
+**Tabla:** Alumno<br>
+**Descripcion:** Almacena la información del alumno.
 
-# 4. Diccionario de Datos
-
-## Tabla: Alumno
-
-Descripción: Almacena la información de los alumnos.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| Matricula | VARCHAR | 10 | PK, NN | Identificador único del alumno |
-| Nombre | VARCHAR | 50 | NN | Nombre del alumno |
-| Apellido1 | VARCHAR | 50 | NN | Primer apellido |
-| Apellido2 | VARCHAR | 50 | NN | Segundo apellido |
-| Correo | VARCHAR | 100 | NN | Correo electrónico |
-| FechaNaci | DATE | - | NN | Fecha de nacimiento |
+| matricula | INT | - | PK, AI, NN | Identificador único del alumno |
+| nombre | VARCHAR | 30 | NN | Nombre del alumno |
+| ap1 | VARCHAR | 20 | NN | Apellido paterno del alumno |
+| ap2 | VARCHAR | 20 | - | Apellido materno del alumno |
+| correo | VARCHAR | 50 | NN | Correo del alumno |
+| fecha_nac | DATE | - | NN | Fecha de nacimiento del alumno |
 
 ---
+<br>
 
-## Tabla: Telefono
+**Tabla:** Credencial<br>
+**Descripción:** Almacena la información de la credencial.
 
-Descripción: Almacena los teléfonos registrados por cada alumno.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| ClaveTel | INT | - | PK, NN | Identificador del teléfono |
-| Matricula | VARCHAR | 10 | PK, FK, NN | Alumno propietario |
-| Telefono | VARCHAR | 15 | NN | Número telefónico |
-
+| num_credencial | INT | - | PK, AI, NN | Identificador único de la credencial |
+| fecha_exp | DATE | - | NN | Fecha de expedición de la credencial |
+| vigencia | DATE | - | NN | Fecha de límite de la vigencia de la credencial |
+| matricula | INT | - | FK, UQ, NN | Clave foranea del identificador único del alumno |
 
 ---
+<br>
 
-## Tabla: Credencial
+**Tabla:** Telefono<br>
+**Descripción:** Almacena los números de teléfono del alumno.
 
-Descripción: Almacena la credencial institucional de cada alumno.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| NumeroCredencial | VARCHAR | 20 | PK, NN | Número de credencial |
-| FechaExp | DATE | - | NN | Fecha de expedición |
-| Vigencia | DATE | - | NN | Fecha de vencimiento |
-| Matricula | VARCHAR | 10 | FK, UQ, NN | Alumno propietario |
+| clave_tel | INT | - | PK, AI, NN | Identificador único del dependiente del número de teléfono |
+| matricula | INT | - | PK, FK, NN | Clave del identificador único del alumno |
+| telefono | VARCHAR | 10 | NN | Número de teléfono del alumno |
 
 ---
+<br>
 
-## Tabla: Profesor
+**Tabla:** Cursa<br>
+**Descripción:** Almacena la información de los proyectos.
 
-Descripción: Almacena la información de los profesores.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| NumProf | INT | - | PK, NN | Número del profesor |
-| Nombre | VARCHAR | 50 | NN | Nombre |
-| Apellido1 | VARCHAR | 50 | NN | Primer apellido |
-| Apellido2 | VARCHAR | 50 | NN | Segundo apellido |
-| NumDep | INT | - | FK, NN | Departamento al que pertenece |
+| matricula | INT | - | PK, FK, NN | Clave foranea del identificador único del alumno |
+| clave_materia | INT | - | PK, FK, NN | Clave foranea del identificador único de la materia |
+| fecha_inscripcion | DATE | - | NN | Fecha de inscripción del alumno |
+| calif_final | DECIMAL | - | NN | Calificación final del alumno |
 
 ---
+<br>
 
-## Tabla: Departamento
+**Tabla:** Materia<br>
+**Descripción:** Almacena los datos de la materia.
 
-Descripción: Almacena la información de los departamentos.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| NumDep | INT | - | PK, NN | Identificador del departamento |
-| NombreDep | VARCHAR | 80 | NN | Nombre del departamento |
-| Edificio | VARCHAR | 50 | NN | Edificio donde se encuentra |
+| clave_materia | INT | - | PK, AI, NN | Número identificador de la materia |
+| nombre_materia | VARCHAR | 30 | NN | Nombre de la materia |
+| creditos | DECIMAL | - | NN | Créditos de la materia |
+| num_prof | INT | - | FK, NN | Clave foranea del identificador único del profesor |
 
 ---
+<br>
 
-## Tabla: Materia
+**Tabla:** Profesor<br>
+**Descripción:** Almacena la información del profesor.
 
-Descripción: Almacena las materias impartidas en la universidad.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| ClaveMateria | VARCHAR | 10 | PK, NN | Clave de la materia |
-| NombreMat | VARCHAR | 80 | NN | Nombre de la materia |
-| Creditos | INT | - | NN | Número de créditos |
-| NumProf | INT | - | FK, NN | Profesor que imparte la materia |
+| num_prof | INT | - | PK, FK, NN | Identificador único del profesor |
+| nombre | VARCHAR | 30 | NN | Nombre o nombres del profesor |
+| ap1 | VARCHAR | 20 | NN | Apellido paterno del profesor |
+| ap2 | VARCHAR | 20 | - | Apellido materno del profesor |
+| num_depto | INT | - | FK, NN | Clave foreanea del identificador único del profesor |
 
 ---
+<br>
 
-## Tabla: Cursa
+**Tabla:** Dependiente<br>
+**Descripción:** Almacena la información del dependiente del profesor.
 
-Descripción: Relaciona a los alumnos con las materias inscritas.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| Matricula | VARCHAR | 10 | PK, FK, NN | Alumno inscrito |
-| ClaveMat | VARCHAR | 10 | PK, FK, NN | Materia inscrita |
-| FechaInscrip | DATE | - | NN | Fecha de inscripción |
-| Calif | DECIMAL | 4,2 | - | Calificación obtenida |
-
+| nombre_depend | VARCHAR | 30 | PK, NN | Identificador único del dependiente del profesor |
+| fecha_nac | DATE | - | NN | Fecha de nacimiento del dependiente del profesor |
+| parentesco | VARCHAR | 10 | NN | Parentesco del dependiente con el profesor |
+| NumProf | INT | - | FK, NN | Clave foranea del identificador único del profesor |
+| num_depto | INT | - | FK, NN | Clave foreanea del identificador único del profesor |
 
 ---
+<br>
 
-## Tabla: Dependiente
+**Tabla:** Participa<br>
+**Descripción:** Relaciona las tablas Profesor y Proyecto.
 
-Descripción: Almacena los dependientes de cada profesor.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| NombreDep | VARCHAR | 80 | PK, NN | Nombre del dependiente |
-| NumProf | INT | - | PK, FK, NN | Profesor asociado |
-| FechaNaci | DATE | - | NN | Fecha de nacimiento |
-| Parentesco | VARCHAR | 30 | NN | Relación familiar |
-
+| num_prof | INT | - | PK, FK, NN | Clave foranea del identificador único del profesor |
+| num_proy | INT | - | PK, FK, NN | Clave foranea del identificador único del proyecto |
+| rol | VARCHAR | 30 | NN | Rol del profesor en el proyecto |
+| num_depto | INT | - | FK, NN | Clave foreanea del identificador único del profesor |
 
 ---
+<br>
 
-## Tabla: Proyecto
+**Tabla:** Proyecto<br>
+**Descripción:** Almacena la información del proyecto.
 
-Descripción: Almacena la información de los proyectos institucionales.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| NumProy | INT | - | PK, NN | Identificador del proyecto |
-| Nombre | VARCHAR | 100 | NN | Nombre del proyecto |
-| Presupuesto | DECIMAL | 12,2 | NN | Presupuesto asignado |
+| num_proy | INT | - | PK, AI, NN | Identificador único del proyecto |
+| nombre | VARCHAR | 20 | NN | Nombre del proyecto |
+| presupuesto | DATE | - | NN | Presupuesto del proyecto |
+| num_depto | INT | - | FK, NN | Clave foreanea del identificador único del profesor |
 
 ---
+<br>
 
-## Tabla: Participa
+**Tabla:** Departamento<br>
+**Descripción:** Almacena la información del departamento.
 
-Descripción: Relaciona profesores con proyectos de investigación.
-
-| Campo | Tipo | Longitud | Restricción | Descripción |
+| Campo | Tipo | Longitud | Restricciones | Descripción |
 | :--- | :--- | :--- | :--- | :--- |
-| NumProf | INT | - | PK, FK, NN | Profesor participante |
-| NumProy | INT | - | PK, FK, NN | Proyecto asignado |
-| Rol | VARCHAR | 50 | NN | Rol desempeñado en el proyecto |
+| num_depto | INT | - | PK, AI, NN | Identificador único del departamento |
+| nombre | VARCHAR | 20 | NN | Nombre del departamento |
+| edificio | INT | - | NN | Número del edificio del departamento |
 
----
-
-## 5. Relaciones entre Tablas
-
+### 5. Relaciones
 | Relación | Cardinalidad | Descripción |
-| :--- | :---: | :--- |
-| Alumno → Teléfono | 1:N | Un alumno puede registrar varios teléfonos |
-| Alumno → Credencial | 1:1 | Cada alumno posee una única credencial |
-| Alumno → Cursa | 1:N | Un alumno puede cursar varias materias |
-| Materia → Cursa | 1:N | Una materia puede ser cursada por varios alumnos |
-| Profesor → Materia | 1:N | Un profesor puede impartir varias materias |
-| Departamento → Profesor | 1:N | Un departamento tiene varios profesores |
-| Profesor → Dependiente | 1:N | Un profesor puede registrar varios dependientes |
-| Profesor → Participa | 1:N | Un profesor puede participar en varios proyectos |
-| Proyecto → Participa | 1:N | Un proyecto puede tener varios profesores |
+|:----------|:---------:|----------:|
+| Alumno -> Credencial | 1:1 | Un alumno solo puede tener una sola credencial |
+| Alumno -> Cursa | 1:N | Un alumno cursa varias materias |
+| Materia -> Cursa | 1:N | Una materia es cursada por varios alumnos |
+| Materia -> Profesor | N:1 | Muchas materias son cursadas por un profesor |
+| Profesor -> Dependiente | 1:N | Un profesor tiene muchos dependientes |
+| Profesor -> Departamento | N:1 | Muchos profesores trabajan en un departamento |
+| Profesor -> Participa | 1:N | Un profesor participa en muchos proyectos |
+| Proyecto -> Participa | 1:N | Un proyecto tiene participando a muchos profesores |
 
----
-
-## 6. Matriz de Claves Foráneas
-
-| Tabla | Campo FK | Referencia |
+### 6. Matriz de claves foraneas
+| Tabla | Campo FK | Descripción |
 | :--- | :--- | :--- |
-| Telefono | Matricula | Alumno (Matricula) |
-| Credencial | Matricula | Alumno (Matricula) |
-| Materia | NumProf | Profesor (NumProf) |
-| Profesor | NumDep | Departamento (NumDep) |
-| Cursa | Matricula | Alumno (Matricula) |
-| Cursa | ClaveMat | Materia (ClaveMateria) |
-| Dependiente | NumProf | Profesor (NumProf) |
-| Participa | NumProf | Profesor (NumProf) |
-| Participa | NumProy | Proyecto (NumProy) |
+| Credencial | matricula | Alumno (matricula) |
+| Telefono | matricula | Alumno (matricula) |
+| Cursa | matricula | Alumno (matricula) |
+| Cursa | clave_materia | Materia (clave_materia) |
+| Materia | num_prof | Profesor (num_prof) |
+| Profesor | num_depto | Departamento (num_depto) |
+| Dependiente | num_prof | Profesor (num_prof) |
+| Participa | num_prof | Profesor (num_prof) |
+| Participa | num_proy | Proyecto (num_proy) |
 
----
-
-## 7. Integridad Referencial
-
+### 7. Integridad referencial
 | Regla | Descripción |
 | :--- | :--- |
-| IR-01 | No puede registrarse un teléfono para un alumno inexistente. |
-| IR-02 | No puede existir una credencial sin un alumno asociado. |
-| IR-03 | No puede asignarse una materia a un profesor inexistente. |
-| IR-04 | No puede registrarse un profesor en un departamento inexistente. |
-| IR-05 | No puede inscribirse un alumno en una materia inexistente. |
-| IR-06 | No puede registrarse un dependiente para un profesor inexistente. |
-| IR-07 | No puede registrarse la participación de un profesor en un proyecto inexistente. |
+| - | Información insuficiente |
 
----
-
-## 8. Reglas del Negocio
-
+### 8. Reglas del negocio
 | Código | Regla |
 | :--- | :--- |
-| RN-01 | Cada alumno posee una única credencial institucional. |
-| RN-02 | Un alumno puede registrar varios números telefónicos. |
-| RN-03 | Un alumno puede inscribirse en varias materias. |
-| RN-04 | Cada materia es impartida por un solo profesor. |
-| RN-05 | Un profesor pertenece únicamente a un departamento. |
-| RN-06 | Un profesor puede participar en varios proyectos de investigación. |
-| RN-07 | Un proyecto puede contar con varios profesores participantes. |
-| RN-08 | Un profesor puede registrar varios dependientes. |
+| - | Información insuficiente |
 
----
-
-## 9. Diagrama Relacional
-
-### Solución ejercicio Relacional
-
-![Solución Ej7](../../img/Relacional/Ejercicio7.png)
+### 9. Diagrama relacional
+![Diagrama relacional](../img/ejercicio7-relacional.png)
